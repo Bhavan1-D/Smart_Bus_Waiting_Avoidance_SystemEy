@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% load static %}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Bus Coordination</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:"Segoe UI",sans-serif;
+}
+
+body{
+  min-height:100vh;
+  background:url("{% static 'images/background.jpg' %}") ;
+  color:white;
+}
+
+/* ===== HEADER ===== */
+header{
+  position:fixed;
+  top:0;
+  width:100%;
+  padding:15px 40px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:rgba(2,6,23,0.65);
+  backdrop-filter:blur(6px);
+  z-index:100;
+}
+
+.logo{
+  font-size:22px;
+  font-weight:700;
+  color:#facc15;
+}
+
+/* ===== NAVBAR (SAME AS FEEDBACK PAGE) ===== */
+nav a{
+  margin-left:20px;
+  text-decoration:none;
+  font-size:14px;
+  font-weight:600;
+  color:#f8fafc;
+  padding:8px 16px;
+  border-radius:20px;
+  transition:0.3s ease;
+}
+
+/* Hover dark effect */
+nav a:hover{
+  background:rgba(15,23,42,0.85);
+  color:#facc15;
+  box-shadow:0 0 0 1px rgba(250,204,21,0.6);
+}
+
+/* Active page (HOME) */
+nav a.active{
+  background:#facc15;
+  color:#1e293b;
+}
+
+/* Click / touch effect */
+nav a:active{
+  transform:scale(0.95);
+  background:#fac106;
+  color:#141412;
+}
+
+/* ===== HERO SECTION ===== */
+.center{
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding-top:80px;
+  background:rgba(0,0,0,0.4);
+}
+
+.center h1{
+  font-size:42px;
+}
+
+.center p{
+  max-width:650px;
+  margin-top:15px;
+  font-size:16px;
+}
+
+/* ===== FEATURES ===== */
+.features{
+  background:rgba(0,0,0,0.75);
+  padding:60px 20px;
+  text-align:center;
+}
+
+.features h2{
+  color:#facc15;
+  margin-bottom:35px;
+  font-size:28px;
+}
+
+.feature-box{
+  display:flex;
+  justify-content:center;
+  gap:25px;
+  flex-wrap:wrap;
+}
+
+.card{
+  background:rgba(255,255,255,0.1);
+  width:260px;
+  padding:25px;
+  border-radius:18px;
+  transition:0.3s;
+}
+
+.card:hover{
+  transform:translateY(-8px);
+  background:rgba(255,255,255,0.2);
+}
+
+.card h3{
+  color:#facc15;
+  margin-bottom:10px;
+}
+
+/* ===== FOOTER ===== */
+footer{
+  background:black;
+  text-align:center;
+  padding:12px;
+  font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">🚌 Smart Bus Coordination</div>
+  <nav>
+    <a href="{% url 'home' %}" class="active">Home</a>
+    <a href="{% url 'login' %}">Login</a>
+    <a href="{% url 'signup' %}">Sign Up</a>
+
+    
+    <a href="{% url 'feedback' %}">Feedback</a>
+    <a href="{% url 'about' %}">About Us</a>
+  </nav>
+</header>
+
+<div class="center">
+  <h1>Welcome to Smart Bus Coordination System</h1>
+  <p>
+    A smart solution to reduce waiting time, improve coordination
+    between drivers and passengers, and manage transportation efficiently.
+  </p>
+  <p>25+ Buses | 40+ Drivers | 1200+ Students | 150 Trips Daily</p>
+</div>
+
+<section class="features">
+  <h2>How This System Works</h2>
+  <div class="feature-box">
+    <div class="card">
+      <h3>🧑‍🎓 Passenger Updates</h3>
+      <p>Students update availability so drivers know whether to wait.</p>
+    </div>
+
+    <div class="card">
+      <h3>🚌 Driver Coordination</h3>
+      <p>Drivers get real-time passenger status updates.</p>
+    </div>
+
+    <div class="card">
+      <h3>📍 Route & Timing</h3>
+      <p>Admin manages routes and schedules efficiently.</p>
+    </div>
+
+    <div class="card">
+      <h3>🔐 Secure Access</h3>
+      <p>Separate login for Students, Drivers and Admin.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 Smart Bus Coordination System | All Rights Reserved
+</footer>
+
+</body>
+</html>

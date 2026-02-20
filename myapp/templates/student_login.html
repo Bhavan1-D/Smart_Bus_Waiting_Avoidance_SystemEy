@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<title>Student Login</title>
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    background:#f0f2f5;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:Segoe UI;
+}
+
+.box{
+    background:white;
+    width:350px;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.3);
+}
+
+h2{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+input{
+    width:100%;
+    padding:10px;
+    margin:10px 0;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+
+button{
+    width:100%;
+    padding:10px;
+    background:#1b5e20;
+    color:white;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#2e7d32;
+}
+
+.error{
+    color:red;
+    text-align:center;
+    margin-top:10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+    <h2>Student Login</h2>
+
+    <!-- Fixed form with action to student_login URL -->
+    <form method="POST" action="{% url 'student_login' %}">
+        {% csrf_token %}
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button type="submit">Login</button>
+    </form>
+
+    {% for message in messages %}
+        <div class="error">{{ message }}</div>
+    {% endfor %}
+</div>
+
+</body>
+</html>

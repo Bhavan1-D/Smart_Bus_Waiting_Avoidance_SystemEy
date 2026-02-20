@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Student Status</title>
+
+<style>
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Arial;
+    background: #eef2f7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.status-box {
+    width: 750px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+    border-radius: 18px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.35);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #007bff;
+}
+
+.section-title {
+    color: #007bff;
+    font-weight: bold;
+    margin: 20px 0 10px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.info-box {
+    background: #f5f6f8;
+    padding: 14px;
+    border-radius: 8px;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 13px;
+}
+
+.come { color: green; font-weight: bold; }
+.notcome { color: red; font-weight: bold; }
+.wait { color: orange; font-weight: bold; }
+
+.back-btn {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.back-btn:hover {
+    background: #007bff;
+}
+</style>
+</head>
+
+<body>
+
+<a href="{% url 'student_dashboard' %}">
+    <button class="back-btn">&#8592;</button>
+</a>
+
+<div class="status-box">
+
+<h2>Student Status</h2>
+
+<div class="section-title">Attendance Status</div>
+<div class="info-grid">
+    <div class="info-box">
+        <b>Status:</b>
+        {% if status == "come" %}
+            <span class="come">Coming</span>
+        {% elif status == "notcome" %}
+            <span class="notcome">Not Coming</span>
+        {% elif status == "wait" %}
+            <span class="wait">Waiting until {{ wait_time }}</span>
+        {% else %}
+            Not Submitted
+        {% endif %}
+    </div>
+</div>
+
+<div class="section-title">Live Location</div>
+<iframe 
+    src="https://www.google.com/maps?q=Chennai&output=embed"
+    width="100%"
+    height="260"
+    style="border-radius:10px; border:none;">
+</iframe>
+
+<div class="section-title">Student Details</div>
+<div class="info-grid">
+    <div class="info-box">
+        <b>Username:</b> {{ request.user.username }}
+    </div>
+    <div class="info-box">
+        <b>Email:</b> {{ request.user.email }}
+    </div>
+</div>
+
+<div class="footer">
+College Bus Attendance System
+</div>
+
+</div>
+
+</body>
+</html>

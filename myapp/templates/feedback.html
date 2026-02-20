@@ -1,0 +1,97 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Feedback – Smart Bus Coordination</title>
+<style>
+*{ margin:0; padding:0; box-sizing:border-box; font-family:"Segoe UI",sans-serif; }
+body{ min-height:100vh; background:url("{% static 'images/background.jpg' %}") no-repeat center center fixed; background-size:cover; color:white; }
+/* ===== TOP NAVBAR ===== */
+header{ position:fixed; top:0; width:100%; padding:14px 40px; display:flex; justify-content:space-between; align-items:center; background:rgba(2,6,23,0.65); backdrop-filter:blur(6px); z-index:100; }
+.logo{ color:#facc15; font-size:20px; font-weight:700; }
+nav a{ margin-left:22px; text-decoration:none; font-size:14px; font-weight:600; color:#f8fafc; padding:8px 14px; border-radius:20px; transition:0.3s; }
+nav a:hover{ background:rgba(15,23,42,0.85); color:#facc15; box-shadow:0 0 0 1px rgba(250,204,21,0.6); }
+nav a.active{ background:#facc15; color:#1e293b; }
+/* ===== FEEDBACK SECTION ===== */
+.main{ min-height:100vh; display:flex; justify-content:center; align-items:center; padding-top:80px; }
+.feedback-container{ width:420px; padding:32px; text-align:center; background:rgba(240,248,255,0.88); border-radius:22px; box-shadow:0 25px 45px rgba(0,0,0,0.25); backdrop-filter:blur(8px); animation:fadeUp 0.8s ease; }
+@keyframes fadeUp{ from{opacity:0; transform:translateY(30px)} to{opacity:1; transform:translateY(0)} }
+h1{ font-size:28px; margin-bottom:6px; color:rgb(37,35,35); }
+.subtitle{ font-size:14px; color:#334155; margin-bottom:20px; }
+/* ===== STARS ===== */
+.stars{ display:flex; justify-content:center; gap:12px; margin-bottom:10px; }
+.stars span{ font-size:36px; cursor:pointer; color:#94a3b8; transition:0.3s; }
+.stars span:hover, .stars span.active{ color:#facc15; transform:scale(1.25); }
+#ratingText{ font-size:14px; color:#166534; margin-bottom:15px; font-weight:600; }
+/* ===== INPUTS ===== */
+textarea{ width:100%; padding:12px; margin:8px 0; border-radius:12px; border:1px solid rgba(15,23,42,0.25); background:rgba(255,255,255,0.9); outline:none; font-size:14px; resize:none; }
+/* ===== BUTTON ===== */
+button{ width:100%; padding:14px; margin-top:12px; background:linear-gradient(135deg,#fde047,#facc15); color:#1e293b; border:none; border-radius:14px; font-size:16px; font-weight:600; cursor:pointer; transition:0.3s; }
+button:hover{ transform:translateY(-2px); box-shadow:0 12px 25px rgba(250,204,21,0.45); }
+</style>
+</head>
+<body>
+<header>
+<div class="logo">🚌 Smart Bus Coordination</div>
+<nav>
+<a href="{% url 'home' %}">Home</a>
+<a href="{% url 'login' %}">Login</a>
+<a href="{% url 'signup' %}">Sign Up</a>
+<a href="{% url 'feedback' %}" class="active">Feedback</a>
+<a href="{% url 'about' %}">About Us</a>
+</nav>
+</header>
+
+<div class="main">
+<div class="feedback-container">
+<h1>Feedback</h1>
+<p class="subtitle">Help us improve the Smart Bus System</p>
+
+<!-- STAR RATING -->
+<div class="stars">
+<span onclick="rate(1)">★</span>
+<span onclick="rate(2)">★</span>
+<span onclick="rate(3)">★</span>
+<span onclick="rate(4)">★</span>
+<span onclick="rate(5)">★</span>
+</div>
+<div id="ratingText"></div>
+
+<!-- FORM -->
+<form id="feedbackForm" method="POST" action="{% url 'feedback' %}">
+{% csrf_token %}
+<input type="hidden" name="rating" id="ratingInput" required>
+<textarea name="message" rows="4" placeholder="Write your feedback..." required></textarea>
+<button type="submit">Submit Feedback</button>
+</form>
+</div>
+</div>
+
+<script>
+let selectedRating = 0;
+
+function rate(stars){
+    selectedRating = stars;
+    document.querySelectorAll(".stars span").forEach((s,i)=>{
+        s.classList.toggle("active", i < stars);
+    });
+    const text = ["Needs Improvement 😐","Fair 🙂","Good 👍","Very Good 😄","Excellent ⭐⭐⭐⭐⭐"];
+    document.getElementById("ratingText").innerText = "Rating: " + stars + "/5 – " + text[stars-1];
+    document.getElementById("ratingInput").value = stars;
+}
+
+// Handle form submission safely
+document.getElementById("feedbackForm").addEventListener("submit", function(e){
+    // alert handled by Django context if POST
+    // keep layout, no JS popup needed for server submit
+});
+
+{% if submitted %}
+<script>
+    alert("Feedback submitted successfully!");
+</script>
+{% endif %}
+</script>
+</body>
+</html>

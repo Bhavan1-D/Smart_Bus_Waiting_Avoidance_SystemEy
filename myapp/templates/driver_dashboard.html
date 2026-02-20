@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Driver Dashboard</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Segoe UI, Arial;
+    background:linear-gradient(to right,#0f2027,#203a43,#2c5364);
+    color:white;
+}
+
+header{
+    display:flex;
+    justify-content:space-between;
+    padding:15px 40px;
+    background:rgba(0,0,0,0.6);
+}
+
+header h2{
+    color:#ffdd1b;
+}
+
+header a{
+    padding:8px 15px;
+    background:#e74c3c;
+    color:white;
+    text-decoration:none;
+    border-radius:6px;
+}
+
+.container{
+    max-width:1100px;
+    margin:40px auto;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:25px;
+}
+
+.card{
+    background:rgba(255,255,255,0.15);
+    padding:30px;
+    text-align:center;
+    border-radius:15px;
+    backdrop-filter:blur(10px);
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-6px);
+    background:rgba(255,255,255,0.25);
+}
+
+.card h3{
+    color:#ffdd1b;
+    margin-bottom:10px;
+}
+
+.card p{
+    font-size:32px;
+    font-weight:bold;
+}
+
+.btn{
+    display:block;
+    width:250px;
+    margin:40px auto;
+    padding:14px;
+    background:#1b5e20;
+    color:white;
+    text-align:center;
+    text-decoration:none;
+    border-radius:8px;
+    font-size:16px;
+}
+
+.btn:hover{
+    background:#2e7d32;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h2>🚍 Driver Dashboard</h2>
+    <a href="{% url 'logout' %}">Logout</a>
+</header>
+
+<div class="container">
+
+<div class="cards">
+    <div class="card">
+        <h3>Total Students</h3>
+        <p>{{ total }}</p>
+    </div>
+
+    <div class="card">
+        <h3>Coming</h3>
+        <p>{{ coming }}</p>
+    </div>
+
+    <div class="card">
+        <h3>Waiting</h3>
+        <p>{{ waiting }}</p>
+    </div>
+
+    <div class="card">
+        <h3>Not Coming</h3>
+        <p>{{ notcoming }}</p>
+    </div>
+</div>
+
+<a href="{% url 'passenger_list' %}" class="btn">
+View Students Details
+</a>
+
+</div>
+
+</body>
+</html>

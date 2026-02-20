@@ -1,0 +1,176 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Admin Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:"Segoe UI",sans-serif;}
+body{display:flex;height:100vh;background:linear-gradient(120deg,#e0f2fe,#f8fafc);}
+.sidebar{width:260px;background:linear-gradient(180deg,#0f172a,#1e293b);color:white;padding:24px 18px;}
+.sidebar h2{text-align:center;margin-bottom:30px;}
+.sidebar a{display:block;color:white;text-decoration:none;padding:14px;margin-bottom:10px;border-radius:10px;}
+.sidebar a:hover{background:rgba(255,255,255,0.18);}
+.main{flex:1;padding:25px;overflow:auto;position:relative;}
+.logout{position:absolute;top:20px;right:25px;}
+.logout a{background:#ef4444;color:white;padding:8px 18px;border-radius:10px;text-decoration:none;}
+.header{font-size:26px;margin-bottom:20px;color:#0f172a;}
+.card{background:white;padding:22px;border-radius:18px;box-shadow:0 8px 20px rgba(0,0,0,0.08);margin-bottom:20px;}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;}
+table{width:100%;border-collapse:collapse;}
+th,td{padding:12px;border-bottom:1px solid #e5e7eb;text-align:left;}
+th{background:#f1f5f9;}
+.paid{color:#16a34a;font-weight:600;}
+.unpaid{color:#dc2626;font-weight:600;}
+.remove-btn{background:#dc2626;color:white;border:none;padding:6px 12px;border-radius:6px;text-decoration:none;}
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+  <h2>ADMIN PANEL</h2>
+  <a href="#dashboard">Dashboard</a>
+  <a href="#students">Students</a>
+  <a href="#drivers">Drivers</a>
+  <a href="#fees">Fees</a>
+  <a href="#reports">Reports</a>
+</div>
+
+<div class="main">
+
+<div class="logout">
+  <a href="{% url 'admin_logout' %}">Logout</a>
+</div>
+
+<!-- DASHBOARD OVERVIEW -->
+<div id="dashboard">
+  <div class="header">Dashboard Overview</div>
+  <div class="grid">
+    <div class="card">
+      <h3>Total Buses</h3>
+      <p>{{ total_buses }}</p>
+    </div>
+    <div class="card">
+      <h3>Total Students</h3>
+      <p>{{ total_students }}</p>
+    </div>
+    <div class="card">
+      <h3>Total Drivers</h3>
+      <p>{{ total_drivers }}</p>
+    </div>
+  </div>
+</div>
+
+<!-- STUDENTS -->
+<div id="students">
+  <div class="header">Students List</div>
+  <div class="card">
+    <table>
+      <thead>
+        <tr>
+          <th>Register No</th>
+          <th>Name</th>
+          <th>Department</th>
+          <th>Bus Stop</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for student in students %}
+        <tr>
+          <td>{{ student.StudentID }}</td>
+          <td>{{ student.Name }}</td>
+          <td>{{ student.Department|default:"--" }}</td>
+          <td>{{ student.BusStop|default:"--" }}</td>
+          <td>
+            <a href="{% url 'delete_student' student.StudentID %}" class="remove-btn">Remove</a>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="5">No students found</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- DRIVERS -->
+<div id="drivers">
+  <div class="header">Drivers</div>
+  <div class="card">
+    <table>
+      <thead>
+        <tr>
+          <th>Driver ID</th>
+          <th>Name</th>
+          <th>Bus No</th>
+          <th>Route</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for driver in drivers %}
+        <tr>
+          <td>{{ driver.DriverID }}</td>
+          <td>{{ driver.Name }}</td>
+          <td>{{ driver.VehicleNumber }}</td>
+          <td>{{ driver.Route|default:"--" }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="4">No drivers found</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- FEES -->
+<div id="fees">
+  <div class="header">Fees Details</div>
+  <div class="card">
+    <table>
+      <thead>
+        <tr>
+          <th>Student ID</th>
+          <th>Name</th>
+          <th>Status</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for fee in fees %}
+        <tr>
+          <td>{{ fee.StudentID }}</td>
+          <td>{{ fee.StudentName }}</td>
+          <td class="{% if fee.Status == 'Paid' %}paid{% else %}unpaid{% endif %}">{{ fee.Status }}</td>
+          <td>₹ {{ fee.Amount }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="4">No fee records found</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- REPORT -->
+<div id="reports">
+  <div class="header">Transport System Report</div>
+  <div class="card">
+    <p>The College Bus Monitoring System ensures safe and organized transportation.</p>
+    <p>Student boarding stops and driver-route mapping are maintained properly.</p>
+    <p>Fee monitoring improves administrative efficiency.</p>
+  </div>
+</div>
+
+</div>
+</body>
+</html>

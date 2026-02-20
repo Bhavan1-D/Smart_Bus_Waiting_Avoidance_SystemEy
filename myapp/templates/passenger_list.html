@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Passenger List</title>
+
+<style>
+body{
+  margin:0;
+  background:linear-gradient(to right,#1b5e20,#2e7d32);
+  font-family:Arial;
+}
+.container{
+  width:1100px;
+  margin:40px auto;
+  background:white;
+  padding:25px;
+  border-radius:15px;
+  box-shadow:0 20px 40px rgba(0,0,0,0.4);
+}
+h2{text-align:center;color:#2e7d32;margin-bottom:20px;}
+table{width:100%;border-collapse:collapse;}
+th{background:#2e7d32;color:white;padding:12px;}
+td{padding:10px;text-align:center;border-bottom:1px solid #ddd;}
+tr:hover{background:#f1f8e9;}
+.status{padding:6px 14px;border-radius:20px;font-weight:bold;color:white;}
+.coming{ background:#2e7d32; }
+.wait{ background:#f9a825; }
+.notcoming{ background:#c62828; }
+.back{display:inline-block;margin-top:20px;padding:10px 18px;background:#2e7d32;color:white;text-decoration:none;border-radius:6px;}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<h2>🚌 Students Status (Driver View)</h2>
+
+<table>
+<thead>
+<tr>
+<th>S.No</th>
+<th>Student Name</th>
+<th>Bus Stop</th>
+<th>Status</th>
+<th>Wait Time</th>
+</tr>
+</thead>
+
+<tbody>
+{% for s in students %}
+<tr>
+<td>{{ forloop.counter }}</td>
+<td>{{ s.Name }}</td>
+<td>{{ s.BusStop|default:"--" }}</td>
+<td>
+{% if s.Status == "come" %}
+<span class="status coming">Coming</span>
+{% elif s.Status == "wait" %}
+<span class="status wait">Waiting</span>
+{% elif s.Status == "notcome" %}
+<span class="status notcoming">Not Coming</span>
+{% endif %}
+</td>
+<td>{{ s.WaitTime|default:"--" }}</td>
+</tr>
+{% empty %}
+<tr><td colspan="5">No student updated today</td></tr>
+{% endfor %}
+</tbody>
+</table>
+
+<a href="{% url 'driver_dashboard' %}" class="back">⬅ Back to Dashboard</a>
+
+</div>
+</body>
+</html>

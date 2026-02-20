@@ -1,0 +1,7 @@
+pip install django 
+django-admin startproject smartbusproj
+django-admin startapp myapp
+pip install mysqlclient  
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver
